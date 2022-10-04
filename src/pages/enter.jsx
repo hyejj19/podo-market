@@ -1,8 +1,14 @@
 import Image from 'next/image';
 import Input from '@/components/input';
 import Button from '@/components/button';
+import {useForm} from 'react-hook-form';
 
 export default function Enter() {
+  const {register, handleSubmit} = useForm();
+  const onValid = (data, e) => {
+    console.log('valid');
+  };
+  const onInValid = (err, e) => {};
   return (
     <div className="flex w-full flex-col py-16 px-8">
       {/* 로고 이미지 */}
@@ -26,8 +32,20 @@ export default function Enter() {
           </span>
         </div>
       </div>
-      <form className="mt-7 space-y-4">
-        <Input label={'이메일 주소'} name="email" kind="email" type="email" />
+      <form
+        className="mt-7 space-y-4"
+        onSubmit={handleSubmit(onValid, onInValid)}
+      >
+        <Input
+          label={'이메일 주소'}
+          name="email"
+          kind="email"
+          type="email"
+          required
+          register={register('email', {
+            required: '이메일을 입력해 주세요',
+          })}
+        />
         <Button text={'일회용 로그인 번호 받기'} />
       </form>
       {/* 소셜 로그인 form */}

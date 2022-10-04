@@ -19,6 +19,8 @@ export default function Input({
           type={type}
           className="w-full rounded-full border-gray-300 text-sm transition-colors  focus:border-purple-600 focus:outline-none focus:ring-purple-600"
           name={name}
+          required={required}
+          {...register}
         />
       ) : null}
     </div>
