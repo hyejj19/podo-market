@@ -2,20 +2,14 @@ import Image from 'next/image';
 import Input from '@/components/input';
 import Button from '@/components/button';
 import {useForm} from 'react-hook-form';
+import {useState} from 'react';
+import {usePost} from '@/lib/client/useFetch';
 
 export default function Enter() {
   const {register, handleSubmit} = useForm();
-  const onValid = (email, e) => {
-    fetch('/api/users/login', {
-      method: 'POST',
-      body: JSON.stringify(email),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(res => res.json())
-      .then(json => console.log(json))
-      .catch(error => console.error(error));
+  const [login, {loading, response, error}] = usePost('/api/users/login');
+  const onValid = email => {
+    login(email);
   };
   return (
     <div className="flex w-full flex-col py-16 px-8">
@@ -40,19 +34,35 @@ export default function Enter() {
           </span>
         </div>
       </div>
-      <form className="mt-7 space-y-4" onSubmit={handleSubmit(onValid)}>
-        <Input
-          label={'이메일 주소'}
-          name="email"
-          kind="email"
-          type="email"
-          required
-          register={register('email', {
-            required: '이메일을 입력해 주세요',
-          })}
-        />
-        <Button text={'일회용 로그인 번호 받기'} />
-      </form>
+      {response?.result ? (
+        <form className="mt-7 space-y-4" onSubmit={handleSubmit(onValid)}>
+          <Input
+            label={'인증번호 입력'}
+            name="token"
+            type="text"
+            required
+            register={register('token', {
+              required: '이메일로 발급받은 인증번호를 확인해주세요.',
+            })}
+          />
+          <Button text={'인증번호로 로그인하기'} />
+        </form>
+      ) : (
+        <form className="mt-7 space-y-4" onSubmit={handleSubmit(onValid)}>
+          <Input
+            label={'이메일 주소'}
+            name="email"
+            kind="email"
+            type="email"
+            required
+            register={register('email', {
+              required: '이메일을 입력해 주세요',
+            })}
+          />
+          <Button text={'일회용 로그인 번호 받기'} />
+        </form>
+      )}
+
       {/* 소셜 로그인 form */}
       <div className="mt-12">
         <div className="relative flex w-full justify-center border-t border-gray-300">
