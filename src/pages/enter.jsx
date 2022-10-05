@@ -59,7 +59,9 @@ export default function Enter() {
               required: '이메일을 입력해 주세요',
             })}
           />
-          <Button text={'일회용 로그인 번호 받기'} />
+          <Button
+            text={loading ? '인증번호 발급중...' : '일회용 로그인 번호 받기'}
+          />
         </form>
       )}
 
