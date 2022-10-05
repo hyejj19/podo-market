@@ -13,10 +13,25 @@ datasource db {
 }
 
 model User {
+  //자동 증가하는 값으로 기본값 지정, 모델의 id 값으로 지정
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
+  // 업데이트시 당시의 시간을 지정
   updated   DateTime @updatedAt
+  // 현재 시간을 기본값으로 지정
   createdAt DateTime @default(now())
   avatar    String?
+  Token     Token[]
+}
+
+model Token {
+  id        Int      @id @default(autoincrement())
+  payload   String   @unique
+  // user 모델과의 관계를 표현하는 filed
+  // 토큰 레코드 삭제시 참조중인 유저 레코드도 같이 삭제된다. (onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int // User 모델의 id와 연결된 외래키
+  updated   DateTime @updatedAt
+  createdAt DateTime @default(now())
 }

@@ -5,10 +5,18 @@ import {useForm} from 'react-hook-form';
 
 export default function Enter() {
   const {register, handleSubmit} = useForm();
-  const onValid = (data, e) => {
-    console.log('valid');
+  const onValid = (email, e) => {
+    fetch('/api/users/login', {
+      method: 'POST',
+      body: JSON.stringify(email),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(json => console.log(json))
+      .catch(error => console.error(error));
   };
-  const onInValid = (err, e) => {};
   return (
     <div className="flex w-full flex-col py-16 px-8">
       {/* 로고 이미지 */}
@@ -32,10 +40,7 @@ export default function Enter() {
           </span>
         </div>
       </div>
-      <form
-        className="mt-7 space-y-4"
-        onSubmit={handleSubmit(onValid, onInValid)}
-      >
+      <form className="mt-7 space-y-4" onSubmit={handleSubmit(onValid)}>
         <Input
           label={'이메일 주소'}
           name="email"
