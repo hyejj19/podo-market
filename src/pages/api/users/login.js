@@ -1,7 +1,6 @@
 import {mailOpt, sendMail} from '@/lib/server/email';
 import withHandler from '@/lib/server/withHandler';
-import {PrismaClient} from '@prisma/client';
-const prisma = new PrismaClient();
+import client from '@/lib/server/client';
 
 // 랜덤 인증번호 생성
 const getRandomNumber = () => {
@@ -10,7 +9,7 @@ const getRandomNumber = () => {
 
 async function handler(req, res) {
   const user_data = req.body;
-  const token = await prisma.token.create({
+  const token = await client.token.create({
     data: {
       payload: getRandomNumber() + '',
       user: {
@@ -36,7 +35,7 @@ async function handler(req, res) {
   // mail 발송
   sendMail(mailOption);
 
-  res.status(200).json({result: true});
+  res.status(200).json({ok: true});
 }
 
 // API 에서는 next.js가 실행시킬 함수를 default 로 리턴해야함

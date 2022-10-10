@@ -2,15 +2,43 @@ import Image from 'next/image';
 import Input from '@/components/input';
 import Button from '@/components/button';
 import {useForm} from 'react-hook-form';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {usePost} from '@/lib/client/useFetch';
+import {useRouter} from 'next/router';
 
 export default function Enter() {
-  const {register, handleSubmit} = useForm();
+  // email login을 위한 useForm
+  const {register, reset, handleSubmit} = useForm();
+  // token 인증을 위한 useForm
+  const {register: tokenRegister, handleSubmit: tokenHandleSubmit} = useForm();
+  // 이메일 입력 후 인증번호 발급
   const [login, {loading, response, error}] = usePost('/api/users/login');
+  // 인증번호 입력 후 인증 로직 : 변수명 변경할 때 순서 잘지키자 ㅜ
+  const [
+    confirmToken,
+    {loading: tokenLoading, response: tokenResponse, error: tokenError},
+  ] = usePost('/api/users/confirm');
+
+  // submit email
   const onValid = email => {
+    reset();
     login(email);
   };
+
+  // submit token
+  const onValidToken = token => {
+    // 인증번호 발급 끝나기 전 버튼 클릭 방지
+    // if (tokenLoading) return;
+    confirmToken(token);
+  };
+
+  // 인증 완료 후 home으로 리다이렉트
+  const router = useRouter();
+  useEffect(() => {
+    if (tokenResponse?.ok) {
+      router.push('/');
+    }
+  }, [tokenResponse, router]);
   return (
     <div className="flex w-full flex-col py-16 px-8">
       {/* 로고 이미지 */}
@@ -34,14 +62,17 @@ export default function Enter() {
           </span>
         </div>
       </div>
-      {response?.result ? (
-        <form className="mt-7 space-y-4" onSubmit={handleSubmit(onValid)}>
+      {response?.ok ? (
+        <form
+          className="mt-7 space-y-4"
+          onSubmit={tokenHandleSubmit(onValidToken)}
+        >
           <Input
             label={'인증번호 입력'}
             name="token"
             type="text"
             required
-            register={register('token', {
+            register={tokenRegister('token', {
               required: '이메일로 발급받은 인증번호를 확인해주세요.',
             })}
           />

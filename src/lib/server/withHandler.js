@@ -2,7 +2,6 @@
 
 export default function withHandler({method, handler}) {
   return async function (req, res) {
-    console.log(req.body);
     if (req.method !== method) return res.status(405).end();
     try {
       await handler(req, res);

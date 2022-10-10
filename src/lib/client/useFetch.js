@@ -6,7 +6,7 @@ import {useState} from 'react';
 // POST 요청, 요청 상태 변경
 export function usePost(url) {
   const [state, setState] = useState({
-    loding: false,
+    loading: false,
     response: undefined,
     error: undefined,
   });
