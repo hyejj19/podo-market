@@ -34,4 +34,6 @@ async function handler(req, res) {
   return res.json({ok: true, msg: 'token confirmed'});
 }
 
-export default withApiSession(withHandler({method: 'POST', handler}));
+export default withApiSession(
+  withHandler({method: 'POST', handler, isPrivate: false}),
+);

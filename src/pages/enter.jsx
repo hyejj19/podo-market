@@ -28,7 +28,7 @@ export default function Enter() {
   // submit token
   const onValidToken = token => {
     // 인증번호 발급 끝나기 전 버튼 클릭 방지
-    // if (tokenLoading) return;
+    if (tokenLoading) return;
     confirmToken(token);
   };
 
