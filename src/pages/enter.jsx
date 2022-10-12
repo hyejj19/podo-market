@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import Input from '@/components/input';
-import Button from '@/components/button';
+import Input from '@/components/Input';
+import Button from '@/components/Button';
 import {useForm} from 'react-hook-form';
 import {useEffect, useState} from 'react';
 import {usePost} from '@/lib/client/useFetch';
@@ -40,7 +40,7 @@ export default function Enter() {
     }
   }, [tokenResponse, router]);
   return (
-    <div className="flex w-full flex-col py-16 px-8">
+    <div className="flex w-full flex-col py-20 px-8">
       {/* 로고 이미지 */}
       <Image
         src="/podo-image.svg"
@@ -50,12 +50,12 @@ export default function Enter() {
         priority={true}
       />
       {/* 인삿말 */}
-      <div className="mt-10 space-y-2 text-2xl font-extrabold">
+      <div className="mt-14 space-y-2 text-2xl font-extrabold">
         <h2>안녕하세요!</h2>
         <h2>로그인 방법을 선택해주세요.</h2>
       </div>
       {/* 이메일 이용 로그인 form */}
-      <div className="mt-14">
+      <div className="mt-16">
         <div className="relative flex w-full justify-center border-t border-gray-300">
           <span className="absolute -top-2 block bg-white px-3 text-center text-xs text-gray-500">
             일회용 로그인
@@ -64,7 +64,7 @@ export default function Enter() {
       </div>
       {response?.ok ? (
         <form
-          className="mt-7 space-y-4"
+          className="mt-10 space-y-4"
           onSubmit={tokenHandleSubmit(onValidToken)}
         >
           <Input
@@ -79,7 +79,7 @@ export default function Enter() {
           <Button text={'인증번호로 로그인하기'} />
         </form>
       ) : (
-        <form className="mt-7 space-y-4" onSubmit={handleSubmit(onValid)}>
+        <form className="mt-10 space-y-4" onSubmit={handleSubmit(onValid)}>
           <Input
             label={'이메일 주소'}
             name="email"
@@ -97,7 +97,7 @@ export default function Enter() {
       )}
 
       {/* 소셜 로그인 form */}
-      <div className="mt-12">
+      <div className="mt-16">
         <div className="relative flex w-full justify-center border-t border-gray-300">
           <span className="absolute -top-2 block bg-white px-3 text-center text-xs text-gray-500">
             소셜 로그인
