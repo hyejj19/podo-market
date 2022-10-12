@@ -1,6 +1,7 @@
-import Item from '@/components/item';
-import Layout from '@/components/layout';
+import Item from '@/components/Item';
+import Layout from '@/components/Layout';
 import useUser from '@/lib/client/useUser';
+import Circle from '@/components/circle';
 
 export default function Home() {
   const user = useUser();
@@ -13,6 +14,7 @@ export default function Home() {
         ))}
         <Item />
       </div>
+      <Circle />
     </Layout>
   );
 }
