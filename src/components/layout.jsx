@@ -10,6 +10,7 @@ export default function Layout({title, hasTabBar, children}) {
       <header className="flex justify-center border-b-[1.5px] border-gray-200 py-4 px-4">
         <span className="text-lg font-semibold">{title}</span>
       </header>
+      {/* 페이지 내용 */}
       <div className={joinClassNames('py-4', 'px-4', hasTabBar ? 'pb-20' : '')}>
         {children}
       </div>
@@ -35,7 +36,7 @@ export default function Layout({title, hasTabBar, children}) {
               <span className="text-sm text-gray-700">홈</span>
             </a>
           </Link>
-          <Link href={'/'}>
+          <Link href={'/community'}>
             <a className="flex flex-col items-center space-y-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

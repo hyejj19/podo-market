@@ -7,7 +7,7 @@ export default function Circle() {
         viewBox="0 0 24 24"
         strokeWidth="1.5"
         stroke="white"
-        class="h-9 w-9"
+        className="h-9 w-9"
       >
         <path
           strokeLinecap="round"

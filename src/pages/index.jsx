@@ -12,7 +12,6 @@ export default function Home() {
         {[1, 1, 1, 1, 1, 1, 1, 1].map((_, idx) => (
           <Item key={idx} />
         ))}
-        <Item />
       </div>
       <Circle />
     </Layout>
