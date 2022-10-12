@@ -1,5 +1,3 @@
-import {useForm} from 'react-hook-form';
-
 export default function Input({label, name, type, required, register}) {
   return (
     <div className="space-y-2">
